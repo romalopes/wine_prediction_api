@@ -87,18 +87,18 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: wine_prediction_api_production
-    username: wine_prediction_api
-    password: <%= ENV["WINE_PREDICTION_API_DATABASE_PASSWORD"] %>
-  cache:
-    <<: *primary_production
-    database: wine_prediction_api_production_cache
-    migrations_paths: db/cache_migrate
-  queue:
-    <<: *primary_production
-    database: wine_prediction_api_production_queue
-    migrations_paths: db/queue_migrate
-  cable:
-    <<: *primary_production
-    database: wine_prediction_api_production_cable
-    migrations_paths: db/cable_migrate
+    database: url: <%= ENV["DATABASE_URL"] %>
+    # username: wine_prediction_api
+    # password: <%= ENV["WINE_PREDICTION_API_DATABASE_PASSWORD"] %>
+  # cache:
+  #   <<: *primary_production
+  #   database: wine_prediction_api_production_cache
+  #   migrations_paths: db/cache_migrate
+  # queue:
+  #   <<: *primary_production
+  #   database: wine_prediction_api_production_queue
+  #   migrations_paths: db/queue_migrate
+  # cable:
+  #   <<: *primary_production
+  #   database: wine_prediction_api_production_cable
+  #   migrations_paths: db/cable_migrate
