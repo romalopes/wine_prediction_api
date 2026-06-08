@@ -1,5 +1,5 @@
 class WineTasteParameter < ApplicationRecord
-   belongs_to :wine
+  belongs_to :wine
   belongs_to :taste_parameter
 
   validates :wine_id, presence: true
