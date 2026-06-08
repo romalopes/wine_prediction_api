@@ -19,7 +19,6 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   max_connections: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
-
 development:
   <<: *default
   database: wine_prediction_api_development
@@ -87,7 +86,7 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: url: <%= ENV["DATABASE_URL"] %>
+    url: <%= ENV["DATABASE_URL"] %>
     # username: wine_prediction_api
     # password: <%= ENV["WINE_PREDICTION_API_DATABASE_PASSWORD"] %>
   # cache:
