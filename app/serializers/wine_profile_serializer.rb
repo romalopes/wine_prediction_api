@@ -5,7 +5,7 @@ class WineProfileSerializer
 
   def as_json
     {
-      id: @wine_profile.slug,
+      slug: @wine_profile.slug,
       name: @wine_profile.name,
       grapes: @wine_profile.grapes,
       regions: @wine_profile.regions,
