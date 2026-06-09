@@ -16,18 +16,18 @@ ActiveRecord::Base.connection.reset_pk_sequence!("wine_taste_parameters")
 
 # Create taste parameters
 taste_params_data = [
-  { identification: 'acidity', label: 'Acidity', low: 'Soft', high: 'Sharp', help: 'How bright, fresh, or mouth-watering the wine feels.' },
-  { identification: 'body', label: 'Body', low: 'Light', high: 'Full', help: 'The weight and richness of the wine on your palate.' },
-  { identification: 'tannin', label: 'Tannin', low: 'Silky', high: 'Grippy', help: 'The drying texture, common in red wines.' },
-  { identification: 'sweetness', label: 'Sweetness', low: 'Dry', high: 'Sweet', help: 'How much sugar or ripe sweetness you perceive.' },
-  { identification: 'alcohol', label: 'Alcohol warmth', low: 'Cool', high: 'Warm', help: 'The heat or weight from alcohol.' },
-  { identification: 'fruit', label: 'Fruit intensity', low: 'Subtle', high: 'Expressive', help: 'How strongly fruit aromas and flavors stand out.' }
+  { slug: 'acidity', label: 'Acidity', low: 'Soft', high: 'Sharp', help: 'How bright, fresh, or mouth-watering the wine feels.' },
+  { slug: 'body', label: 'Body', low: 'Light', high: 'Full', help: 'The weight and richness of the wine on your palate.' },
+  { slug: 'tannin', label: 'Tannin', low: 'Silky', high: 'Grippy', help: 'The drying texture, common in red wines.' },
+  { slug: 'sweetness', label: 'Sweetness', low: 'Dry', high: 'Sweet', help: 'How much sugar or ripe sweetness you perceive.' },
+  { slug: 'alcohol', label: 'Alcohol warmth', low: 'Cool', high: 'Warm', help: 'The heat or weight from alcohol.' },
+  { slug: 'fruit', label: 'Fruit intensity', low: 'Subtle', high: 'Expressive', help: 'How strongly fruit aromas and flavors stand out.' }
 ]
 
 # Create wine profiles
 wine_profiles_data = [
   {
-    identification: 'pinot-noir',
+    slug: 'pinot-noir',
     name: 'Pinot Noir',
     color: 'Red',
     grapes: ['Pinot Noir'],
@@ -44,7 +44,7 @@ wine_profiles_data = [
     }
   },
   {
-    identification: 'cabernet-sauvignon',
+    slug: 'cabernet-sauvignon',
     name: 'Cabernet Sauvignon',
     color: 'Red',
     grapes: ['Cabernet Sauvignon'],
@@ -61,7 +61,7 @@ wine_profiles_data = [
     }
   },
   {
-    identification: 'merlot',
+    slug: 'merlot',
     name: 'Merlot',
     color: 'Red',
     grapes: ['Merlot'],
@@ -78,7 +78,7 @@ wine_profiles_data = [
     }
   },
   {
-    identification: 'syrah-shiraz',
+    slug: 'syrah-shiraz',
     name: 'Syrah / Shiraz',
     color: 'Red',
     grapes: ['Syrah', 'Shiraz'],
@@ -95,7 +95,7 @@ wine_profiles_data = [
     }
   },
   {
-    identification: 'sangiovese',
+    slug: 'sangiovese',
     name: 'Sangiovese',
     color: 'Red',
     grapes: ['Sangiovese'],
@@ -112,7 +112,7 @@ wine_profiles_data = [
     }
   },
   {
-    identification: 'chardonnay',
+    slug: 'chardonnay',
     name: 'Chardonnay',
     color: 'White',
     grapes: ['Chardonnay'],
@@ -129,7 +129,7 @@ wine_profiles_data = [
     }
   },
   {
-    identification: 'sauvignon-blanc',
+    slug: 'sauvignon-blanc',
     name: 'Sauvignon Blanc',
     color: 'White',
     grapes: ['Sauvignon Blanc'],
@@ -146,7 +146,7 @@ wine_profiles_data = [
     }
   },
   {
-    identification: 'riesling',
+    slug: 'riesling',
     name: 'Riesling',
     color: 'White',
     grapes: ['Riesling'],
@@ -163,7 +163,7 @@ wine_profiles_data = [
     }
   },
   {
-    identification: 'prosecco',
+    slug: 'prosecco',
     name: 'Prosecco',
     color: 'Sparkling',
     grapes: ['Glera'],
@@ -180,7 +180,7 @@ wine_profiles_data = [
     }
   },
   {
-    identification: 'rose',
+    slug: 'rose',
     name: 'Dry Rose',
     color: 'Rose',
     grapes: ['Grenache', 'Cinsault', 'Syrah'],
@@ -202,7 +202,7 @@ wine_profiles_data = [
 # Create wine test cases (australianWineTests)
 australian_wine_tests_data = [
   {
-    identification: 'penfolds-bin-389',
+    slug: 'penfolds-bin-389',
     name: 'Penfolds Bin 389 Cabernet Shiraz',
     region: 'South Australia',
     color: 'Red',
@@ -217,7 +217,7 @@ australian_wine_tests_data = [
     }
   },
   {
-    identification: 'henschke-hill-of-grace',
+    slug: 'henschke-hill-of-grace',
     name: 'Henschke Hill of Grace Shiraz',
     region: 'Eden Valley, South Australia',
     color: 'Red',
@@ -232,7 +232,7 @@ australian_wine_tests_data = [
     }
   },
   {
-    identification: 'leeuwin-estate-art-series',
+    slug: 'leeuwin-estate-art-series',
     name: 'Leeuwin Estate Art Series Chardonnay',
     region: 'Margaret River, Western Australia',
     color: 'White',
@@ -247,7 +247,7 @@ australian_wine_tests_data = [
     }
   },
   {
-    identification: 'grosset-polish-hill',
+    slug: 'grosset-polish-hill',
     name: 'Grosset Polish Hill Riesling',
     region: 'Clare Valley, South Australia',
     color: 'White',
@@ -262,7 +262,7 @@ australian_wine_tests_data = [
     }
   },
   {
-    identification: 'tyrrells-vat-1-semillon',
+    slug: 'tyrrells-vat-1-semillon',
     name: "Tyrrell's Vat 1 Semillon",
     region: 'Hunter Valley, New South Wales',
     color: 'White',
@@ -277,7 +277,7 @@ australian_wine_tests_data = [
     }
   },
   {
-    identification: 'giaconda-chardonnay',
+    slug: 'giaconda-chardonnay',
     name: 'Giaconda Estate Vineyard Chardonnay',
     region: 'Beechworth, Victoria',
     color: 'White',
@@ -292,7 +292,7 @@ australian_wine_tests_data = [
     }
   },
   {
-    identification: 'yalumba-signature',
+    slug: 'yalumba-signature',
     name: 'Yalumba The Signature Cabernet Shiraz',
     region: 'Barossa, South Australia',
     color: 'Red',
@@ -307,7 +307,7 @@ australian_wine_tests_data = [
     }
   },
   {
-    identification: 'tolpuddle-pinot-noir',
+    slug: 'tolpuddle-pinot-noir',
     name: 'Tolpuddle Vineyard Pinot Noir',
     region: 'Coal River Valley, Tasmania',
     color: 'Red',
@@ -322,7 +322,7 @@ australian_wine_tests_data = [
     }
   },
   {
-    identification: 'de-bortoli-noble-one',
+    slug: 'de-bortoli-noble-one',
     name: 'De Bortoli Noble One Botrytis Semillon',
     region: 'Riverina, New South Wales',
     color: 'Dessert',
@@ -337,7 +337,7 @@ australian_wine_tests_data = [
     }
   },
   {
-    identification: 'rockford-basket-press',
+    slug: 'rockford-basket-press',
     name: 'Rockford Basket Press Shiraz',
     region: 'Barossa Valley, South Australia',
     color: 'Red',
@@ -355,7 +355,7 @@ australian_wine_tests_data = [
 
 
 taste_params = TasteParameter.create(taste_params_data.map { |tp| {
-  identification: tp[:identification],
+  slug: tp[:slug],
   label: tp[:label],
   low: tp[:low],
   high: tp[:high],
@@ -365,7 +365,7 @@ taste_params = TasteParameter.create(taste_params_data.map { |tp| {
 
 
 wine_profiles = WineProfile.create(wine_profiles_data.map { |wp| {
-  identification: wp[:identification],
+  slug: wp[:slug],
   name: wp[:name],
   color: wp[:color],
   grapes: wp[:grapes].to_json,
@@ -377,14 +377,14 @@ wine_profiles = WineProfile.create(wine_profiles_data.map { |wp| {
 
 # Create wine profile taste parameters
 wine_profiles.each do |wine_profile|
-  puts "\n\nwine_profile.identification: #{wine_profile.identification}"
-  line = wine_profiles_data.find { |item| item[:identification] == wine_profile.identification }
+  puts "\n\nwine_profile.slug: #{wine_profile.slug}"
+  line = wine_profiles_data.find { |item| item[:slug] == wine_profile.slug }
   line[:parameters].each do |parameter|
     puts "parameter[0]: #{parameter[0]} "
     puts "parameter[1]: #{parameter[1]}"
 
-    taste_parameter = TasteParameter.find_by(identification: parameter[0])
-    puts "taste_param[:identification]: #{taste_parameter.identification}"
+    taste_parameter = TasteParameter.find_by(slug: parameter[0])
+    puts "taste_param[:slug]: #{taste_parameter.slug}"
     WineProfileTasteParameter.create(
       wine_profile: wine_profile,
       taste_parameter: taste_parameter,
@@ -395,7 +395,7 @@ end
 
 
 wine_tests = Wine.create(australian_wine_tests_data.map { |wt| {
-  identification: wt[:identification],
+  slug: wt[:slug],
   name: wt[:name],
   region: wt[:region],
   color: wt[:color],
@@ -405,12 +405,12 @@ wine_tests = Wine.create(australian_wine_tests_data.map { |wt| {
 
 # Create wine taste parameters for test cases
 wine_tests.each do |wine_test|
-  puts "\n\nwine_test.identification: #{wine_test.identification}"
-  line = australian_wine_tests_data.find { |item| item[:identification] == wine_test.identification }
+  puts "\n\nwine_test.slug: #{wine_test.slug}"
+  line = australian_wine_tests_data.find { |item| item[:slug] == wine_test.slug }
   line[:parameters].each do |parameter|
     puts "parameter[0]: #{parameter[0]}"
     puts "parameter[1]: #{parameter[1]}"
-    taste_parameter = TasteParameter.find_by(identification: parameter[0])
+    taste_parameter = TasteParameter.find_by(slug: parameter[0])
     WineTasteParameter.create(
       wine: wine_test,
       taste_parameter: taste_parameter,

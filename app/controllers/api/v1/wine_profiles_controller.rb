@@ -1,11 +1,15 @@
 class Api::V1::WineProfilesController < ApplicationController
   def index
-    render json: WineProfile.all
+    # render json: WineProfile.all
+    wine_profiles = WineProfile.includes(wine_profile_taste_parameters: :taste_parameter)
+    render json: wine_profiles.map { |wine_profile| WineProfileSerializer.new(wine_profile).as_json }
+
   end
 
   def show
     render json: WineProfile.find(params[:id])
   end
+
 
   def create
     @wine_profile = WineProfile.new(wine_profile_params)

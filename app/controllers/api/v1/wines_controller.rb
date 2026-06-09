@@ -1,7 +1,11 @@
 class Api::V1::WinesController < ApplicationController
   def index
-    render json: Wine.all
+    # render json: Wine.all
+    wines = Wine.includes(wine_taste_parameters: :taste_parameter)
+
+    render json: wines.map { |wine| WineSerializer.new(wine).as_json }
   end
+
 
   def show
     render json: Wine.find(params[:id])

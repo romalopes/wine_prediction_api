@@ -1,6 +1,9 @@
 class Api::V1::TasteParametersController < ApplicationController
   def index
-    render json: TasteParameter.all
+    # render json: TasteParameter.all
+    taste_parameters = TasteParameter.all #.includes(wine_profile_taste_parameters: :taste_parameter)
+    render json: taste_parameters.map { |taste_parameter| TasteParameterSerializer.new(taste_parameter).as_json }
+
   end
 
   def show

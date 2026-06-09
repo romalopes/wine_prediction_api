@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_08_070630) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_08_235624) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -18,10 +18,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_08_070630) do
     t.datetime "created_at", null: false
     t.text "help"
     t.string "high"
-    t.string "identification"
     t.string "label"
     t.string "low"
+    t.string "slug"
     t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_taste_parameters_on_slug", unique: true
   end
 
   create_table "wine_profile_taste_parameters", force: :cascade do |t|
@@ -40,13 +41,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_08_070630) do
     t.string "color"
     t.datetime "created_at", null: false
     t.text "grapes"
-    t.string "identification"
     t.string "name"
     t.text "notes"
     t.text "parameters"
     t.text "regions"
     t.text "serving"
+    t.string "slug"
     t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_wine_profiles_on_slug", unique: true
   end
 
   create_table "wine_taste_parameters", force: :cascade do |t|
@@ -64,11 +66,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_08_070630) do
   create_table "wines", force: :cascade do |t|
     t.string "color"
     t.datetime "created_at", null: false
-    t.string "identification"
     t.string "name"
     t.text "prompt"
     t.string "region"
+    t.string "slug"
     t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_wines_on_slug", unique: true
   end
 
   add_foreign_key "wine_profile_taste_parameters", "taste_parameters"
