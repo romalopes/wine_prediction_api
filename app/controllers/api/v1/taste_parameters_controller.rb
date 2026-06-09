@@ -7,7 +7,8 @@ class Api::V1::TasteParametersController < ApplicationController
   end
 
   def show
-    render json: TasteParameter.find(params[:id])
+    taste_parameter = TasteParameter.find(params[:id])
+    render json: TasteParameterSerializer.new(taste_parameter).as_json
   end
 
   def create

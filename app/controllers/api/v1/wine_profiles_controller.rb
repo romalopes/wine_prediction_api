@@ -7,7 +7,9 @@ class Api::V1::WineProfilesController < ApplicationController
   end
 
   def show
-    render json: WineProfile.find(params[:id])
+    # render json: WineProfile.find(params[:id])
+    wine_profile = WineProfile.find(params[:id])
+    render json: WineProfileSerializer.new(wine_profile).as_json
   end
 
 
