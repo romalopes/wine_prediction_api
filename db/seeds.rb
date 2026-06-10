@@ -807,7 +807,7 @@ australian_wine_tests_data = [
 ]
 
 
-taste_params = TasteParameter.create(taste_params_data.map { |tp| {
+TasteParameter.create(taste_params_data.map { |tp| {
   slug: tp[:slug],
   label: tp[:label],
   low: tp[:low],
