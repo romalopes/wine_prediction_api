@@ -7,7 +7,7 @@ class Api::V1::TasteParametersController < ApplicationController
   end
 
   def show
-    taste_parameter = TasteParameter.find(params[:id])
+    taste_parameter = TasteParameter.find_by!(slug: params[:id])
     render json: TasteParameterSerializer.new(taste_parameter).as_json
   end
 
@@ -21,7 +21,7 @@ class Api::V1::TasteParametersController < ApplicationController
   end
 
   def update
-    @taste_parameter = TasteParameter.find(params[:id])
+    @taste_parameter = TasteParameter.find_by!(slug: params[:id])
     if @taste_parameter.update(taste_parameter_params)
       render json: @taste_parameter
     else
@@ -30,7 +30,7 @@ class Api::V1::TasteParametersController < ApplicationController
   end
 
   def destroy
-    @taste_parameter = TasteParameter.find(params[:id])
+    @taste_parameter = TasteParameter.find_by!(slug: params[:id])
     @taste_parameter.destroy
     head :no_content
   end

@@ -7,8 +7,8 @@ class Api::V1::WineProfilesController < ApplicationController
   end
 
   def show
-    # render json: WineProfile.find(params[:id])
-    wine_profile = WineProfile.find(params[:id])
+    # render json: WineProfile.find_by(slug: params[:id])
+    wine_profile = WineProfile.find_by!(slug: params[:id])
     render json: WineProfileSerializer.new(wine_profile).as_json
   end
 
@@ -23,7 +23,7 @@ class Api::V1::WineProfilesController < ApplicationController
   end
 
   def update
-    @wine_profile = WineProfile.find(params[:id])
+    @wine_profile = WineProfile.find_by!(slug: params[:id])
     if @wine_profile.update(wine_profile_params)
       render json: @wine_profile
     else
@@ -32,7 +32,7 @@ class Api::V1::WineProfilesController < ApplicationController
   end
 
   def destroy
-    @wine_profile = WineProfile.find(params[:id])
+    @wine_profile = WineProfile.find_by!(slug: params[:id])
     @wine_profile.destroy
     head :no_content
   end

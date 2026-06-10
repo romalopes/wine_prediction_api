@@ -8,8 +8,8 @@ class Api::V1::WinesController < ApplicationController
 
 
   def show
-    # render json: Wine.find(params[:id])
-    wine = Wine.find(params[:id])
+    # render json: Wine.find_by(slug: params[:id])
+    wine = Wine.find_by!(slug: params[:id])
     render json: WineSerializer.new(wine).as_json
   end
 
@@ -23,7 +23,7 @@ class Api::V1::WinesController < ApplicationController
   end
 
   def update
-    @wine = Wine.find(params[:id])
+    @wine = Wine.find_by!(slug: params[:id])
     if @wine.update(wine_params)
       render json: @wine
     else
@@ -32,7 +32,7 @@ class Api::V1::WinesController < ApplicationController
   end
 
   def destroy
-    @wine = Wine.find(params[:id])
+    @wine = Wine.find_by!(slug: params[:id])
     @wine.destroy
     head :no_content
   end
