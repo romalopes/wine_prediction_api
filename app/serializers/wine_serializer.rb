@@ -5,12 +5,23 @@ class WineSerializer
 
   def as_json
     {
+      id: @wine.id,
       slug: @wine.slug,
       name: @wine.name,
       region: @wine.region,
       color: @wine.color,
+      closure: @wine.closure,
+      alcohol_percentage: @wine.alcohol_percentage&.to_f,
+      volume_ml: @wine.volume_ml,
       prompt: @wine.prompt,
-      parameters: parameters
+      parameters: parameters,
+      vintages: @wine.vintages.order(year: :desc).map do |v|
+        {
+          id: v.id,
+          year: v.year,
+          prompt: v.prompt
+        }
+      end
     }
   end
 

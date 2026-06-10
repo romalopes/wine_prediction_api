@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_08_235624) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_10_120001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+  enable_extension "pg_trgm"
 
   create_table "taste_parameters", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -23,6 +24,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_08_235624) do
     t.string "slug"
     t.datetime "updated_at", null: false
     t.index ["slug"], name: "index_taste_parameters_on_slug", unique: true
+  end
+
+  create_table "vintages", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "prompt"
+    t.datetime "updated_at", null: false
+    t.bigint "wine_id"
+    t.integer "year", null: false
+    t.index ["wine_id"], name: "index_vintages_on_wine_id"
   end
 
   create_table "wine_profile_taste_parameters", force: :cascade do |t|
@@ -48,6 +58,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_08_235624) do
     t.text "serving"
     t.string "slug"
     t.datetime "updated_at", null: false
+    t.index ["grapes"], name: "index_wine_profiles_on_grapes_trgm", opclass: :gin_trgm_ops, using: :gin
+    t.index ["name"], name: "index_wine_profiles_on_name_trgm", opclass: :gin_trgm_ops, using: :gin
+    t.index ["regions"], name: "index_wine_profiles_on_regions_trgm", opclass: :gin_trgm_ops, using: :gin
     t.index ["slug"], name: "index_wine_profiles_on_slug", unique: true
   end
 
@@ -64,6 +77,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_08_235624) do
   end
 
   create_table "wines", force: :cascade do |t|
+    t.decimal "alcohol_percentage", precision: 10, scale: 2
+    t.string "closure"
     t.string "color"
     t.datetime "created_at", null: false
     t.string "name"
@@ -71,9 +86,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_08_235624) do
     t.string "region"
     t.string "slug"
     t.datetime "updated_at", null: false
+    t.integer "volume_ml"
+    t.index ["name"], name: "index_wines_on_name_trgm", opclass: :gin_trgm_ops, using: :gin
+    t.index ["region"], name: "index_wines_on_region_trgm", opclass: :gin_trgm_ops, using: :gin
     t.index ["slug"], name: "index_wines_on_slug", unique: true
   end
 
+  add_foreign_key "vintages", "wines"
   add_foreign_key "wine_profile_taste_parameters", "taste_parameters"
   add_foreign_key "wine_profile_taste_parameters", "wine_profiles"
   add_foreign_key "wine_taste_parameters", "taste_parameters"

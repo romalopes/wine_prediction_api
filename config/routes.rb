@@ -3,7 +3,11 @@ Rails.application.routes.draw do
    namespace :api do
     namespace :v1 do
       resources :wines
-      resources :wine_profiles
+      resources :wine_profiles do
+        collection do
+          get :search
+        end
+      end
       resources :taste_parameters
     end
   end

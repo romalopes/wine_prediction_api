@@ -1,6 +1,9 @@
 class Wine < ApplicationRecord
   has_many :wine_taste_parameters, dependent: :destroy
   has_many :taste_parameters, through: :wine_taste_parameters
+  has_many :vintages, dependent: :destroy
+
+  accepts_nested_attributes_for :vintages, allow_destroy: true, reject_if: :all_blank
 
   validates :name, presence: true
   validates :region, presence: true

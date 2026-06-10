@@ -54,7 +54,7 @@ RSpec.describe "Api::V1::Wines", type: :request do
       get "/api/v1/wines"
       body = JSON.parse(response.body)
 
-      first = body.find { |w| w["id"] == wine_one.slug }
+      first = body.find { |w| w["slug"] == wine_one.slug }
       expect(first).to include(
         "name"   => "Penfolds Bin 389",
         "region" => "South Australia",
@@ -69,9 +69,9 @@ RSpec.describe "Api::V1::Wines", type: :request do
 
     it "uses the wine slug, not the database id, as the public id" do
       get "/api/v1/wines"
-      ids = JSON.parse(response.body).map { |w| w["id"] }
-      expect(ids).to match_array([wine_one.slug, wine_two.slug])
-      expect(ids).not_to include(wine_one.id, wine_two.id)
+      slugs = JSON.parse(response.body).map { |w| w["slug"] }
+      expect(slugs).to match_array([wine_one.slug, wine_two.slug])
+      expect(slugs).not_to include(wine_one.id, wine_two.id)
     end
   end
 

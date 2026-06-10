@@ -1,33 +1,30 @@
 class Api::V1::WinesController < ApplicationController
   def index
-    # render json: Wine.all
-    wines = Wine.includes(wine_taste_parameters: :taste_parameter)
+    wines = Wine.includes(wine_taste_parameters: :taste_parameter, vintages: []).order(:name)
 
     render json: wines.map { |wine| WineSerializer.new(wine).as_json }
   end
 
-
   def show
-    # render json: Wine.find_by(slug: params[:id])
-    wine = Wine.find_by!(slug: params[:id])
+    wine = Wine.includes(vintages: []).find_by!(slug: params[:id])
     render json: WineSerializer.new(wine).as_json
   end
 
   def create
     @wine = Wine.new(wine_params)
     if @wine.save
-      render json: @wine, status: :created
+      render json: WineSerializer.new(@wine).as_json, status: :created
     else
-      render json: @wine.errors, status: :unprocessable_entity
+      render json: { errors: @wine.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def update
     @wine = Wine.find_by!(slug: params[:id])
     if @wine.update(wine_params)
-      render json: @wine
+      render json: WineSerializer.new(@wine).as_json
     else
-      render json: @wine.errors, status: :unprocessable_entity
+      render json: { errors: @wine.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -40,6 +37,6 @@ class Api::V1::WinesController < ApplicationController
   private
 
   def wine_params
-    params.require(:wine).permit(:name, :region, :color, :prompt)
+    params.require(:wine).permit(:name, :region, :color, :prompt, :closure, :alcohol_percentage, :volume_ml, vintages_attributes: [:id, :year, :prompt, :_destroy])
   end
 end
