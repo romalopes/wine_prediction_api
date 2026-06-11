@@ -34,7 +34,6 @@ class Api::V1::WineProfilesController < ApplicationController
   end
 
   def search_with_llm_interpreted
-    aaaaa
     query = params[:q].to_s.strip
     if query.blank?
       render json: { wines: [], wine_profiles: [], llm_interpreted: nil } and return
