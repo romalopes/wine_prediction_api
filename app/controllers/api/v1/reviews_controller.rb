@@ -1,0 +1,68 @@
+class Api::V1::ReviewsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_vintage, only: [:index, :create]
+  before_action :set_review, only: [:show, :update, :destroy]
+
+  def index
+    reviews = @vintage.reviews.visible_to(@current_user).by_recency.includes(:user)
+    render json: reviews.map { |r| ReviewSerializer.new(r).as_json }
+  end
+
+  def show
+    if @review.status == "draft" && @review.user_id != @current_user.id
+      return render json: { error: "Not found" }, status: :not_found
+    end
+    render json: ReviewSerializer.new(@review).as_json
+  end
+
+  def create
+    review = @vintage.reviews.new(review_params)
+    review.user = @current_user
+
+    if review.save
+      render json: ReviewSerializer.new(review).as_json, status: :created
+    else
+      render json: { errors: review.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    if @review.user_id != @current_user.id
+      return render json: { error: "Forbidden" }, status: :forbidden
+    end
+
+    if @review.update(review_params)
+      render json: ReviewSerializer.new(@review).as_json
+    else
+      render json: { errors: @review.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if @review.user_id != @current_user.id
+      return render json: { error: "Forbidden" }, status: :forbidden
+    end
+
+    @review.destroy
+    head :no_content
+  end
+
+  private
+
+  def set_vintage
+    wine = Wine.find_by!(slug: params[:wine_id])
+    @vintage = wine.vintages.find(params[:vintage_id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "Vintage not found" }, status: :not_found
+  end
+
+  def set_review
+    @review = Review.includes(:user).find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "Review not found" }, status: :not_found
+  end
+
+  def review_params
+    params.require(:review).permit(:comment, :score, :status, :published_at)
+  end
+end

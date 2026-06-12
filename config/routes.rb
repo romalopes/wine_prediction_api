@@ -2,7 +2,12 @@ Rails.application.routes.draw do
   # v1_api_routes
    namespace :api do
     namespace :v1 do
-      resources :wines
+      resources :wines do
+        resources :vintages, only: [] do
+          resources :reviews, only: [:index, :create]
+        end
+      end
+      resources :reviews, only: [:show, :update, :destroy]
       resources :wine_profiles do
         collection do
           get :search
