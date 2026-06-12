@@ -8,6 +8,13 @@ class Api::V1::ReviewsController < ApplicationController
     render json: reviews.map { |r| ReviewSerializer.new(r).as_json }
   end
 
+  def my_reviews
+    reviews = Review.where(user: @current_user)
+                    .by_recency
+                    .includes(:user, vintage: :wine)
+    render json: reviews.map { |r| ReviewSerializer.new(r).as_json.merge(wine_name: r.vintage.wine.name, wine_slug: r.vintage.wine.slug, vintage_year: r.vintage.year) }
+  end
+
   def show
     if @review.status == "draft" && @review.user_id != @current_user.id
       return render json: { error: "Not found" }, status: :not_found

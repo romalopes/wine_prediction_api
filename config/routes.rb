@@ -7,7 +7,11 @@ Rails.application.routes.draw do
           resources :reviews, only: [:index, :create]
         end
       end
-      resources :reviews, only: [:show, :update, :destroy]
+      resources :reviews, only: [:show, :update, :destroy] do
+        collection do
+          get :my_reviews
+        end
+      end
       resources :wine_profiles do
         collection do
           get :search
