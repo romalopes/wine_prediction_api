@@ -1,10 +1,6 @@
 module Authenticatable
   extend ActiveSupport::Concern
 
-  # included do
-  #   before_action :authenticate_user!
-  # end
-
   private
 
   def authenticate_user!
@@ -12,12 +8,34 @@ module Authenticatable
 
     return render json: { error: "Unauthorized" }, status: :unauthorized unless token
 
+    # if Rails.env.development? && !NeonAuth::Session.schema_exists?
+    #   @current_user = OpenStruct.new(id: 'dev-user-local', email: 'dev@local.test')
+    #   return
+    # end
+    #
+
     begin
       payload, = JWT.decode(token, nil, false)
 
       Rails.logger.info payload.inspect
 
+
+
       puts payload["sub"]
+
+
+      puts "\n\n\nSKIP_AUTH = #{ENV["SKIP_AUTH"]}"
+      if ENV["SKIP_AUTH"] == "true"
+        puts "Authentication disabled"
+        # @current_user = NeonAuth::User.first;
+          @current_user = {
+            id: payload["sub"],
+            email: payload["email"],
+            name: payload["name"]
+        }
+        return;
+      end
+
       @current_user = NeonAuth::User.find_or_create_by!(
         id: payload["sub"]
       ) do |user|

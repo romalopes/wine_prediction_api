@@ -1,4 +1,5 @@
 class Api::V1::WineProfilesController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:index, :show, :search]
   def index
     wine_profiles = WineProfile.includes(wine_profile_taste_parameters: :taste_parameter)
     render json: wine_profiles.map { |wine_profile| WineProfileSerializer.new(wine_profile).as_json }

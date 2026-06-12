@@ -1,4 +1,5 @@
 class Api::V1::TasteParametersController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:index, :show]
   def index
     # render json: TasteParameter.all
     taste_parameters = TasteParameter.all #.includes(wine_profile_taste_parameters: :taste_parameter)

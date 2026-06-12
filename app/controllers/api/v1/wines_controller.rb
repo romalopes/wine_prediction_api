@@ -1,6 +1,7 @@
 class Api::V1::WinesController < ApplicationController
-  include Authenticatable
-  before_action :authenticate_user!, only: [:create, :update, :destroy]
+
+  # before_action :authenticate_user!, only: [:create, :update, :destroy]
+  skip_before_action :authenticate_user!, only: [:index, :show]
 
   def index
     wines = Wine.includes(wine_taste_parameters: :taste_parameter, vintages: []).order(:name)
